@@ -28,21 +28,21 @@ const mockData = [{
 const serverData = [
     {
         id: 1,
-        name: 'Adidas',
+        name: 'Nike',
         amount: 61.41,
         bestSeller: bestSellerImg,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam venenatis venenatis purus nec aliquam. Proin non tincidunt tellus. Vestibulum semper sit amet arcu vel mollis. Cras eu placerat massa. Integer fringilla non est ut luctus. Sed facilisis ut lorem ut feugiat. Integer nec bibendum enim, ut dapibus nibh. Nunc sollicitudin nisi dolor, egestas congue urna dignissim vitae. Nulla sem est, pellentesque ac suscipit vitae, tempor a diam. Aliquam lacus nisi, sollicitudin tristique lacus id, mattis dapibus nisl.'
     },
     {
         id: 2,
-        name: 'Nike',
+        name: 'Adidas',
         amount: 11.84,
         bestSeller: bestSellerImg,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam venenatis venenatis purus nec aliquam. Proin non tincidunt tellus. Vestibulum semper sit amet arcu vel mollis. Cras eu placerat massa. Integer fringilla non est ut luctus. Sed facilisis ut lorem ut feugiat. Integer nec bibendum enim, ut dapibus nibh. Nunc sollicitudin nisi dolor, egestas congue urna dignissim vitae. Nulla sem est, pellentesque ac suscipit vitae, tempor a diam. Aliquam lacus nisi, sollicitudin tristique lacus id, mattis dapibus nisl.'
     },
     {
         id: 3,
-        name: 'Puma',
+        name: 'Converse',
         amount: 10.85,
         bestSeller: bestSellerImg,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam venenatis venenatis purus nec aliquam. Proin non tincidunt tellus. Vestibulum semper sit amet arcu vel mollis. Cras eu placerat massa. Integer fringilla non est ut luctus. Sed facilisis ut lorem ut feugiat. Integer nec bibendum enim, ut dapibus nibh. Nunc sollicitudin nisi dolor, egestas congue urna dignissim vitae. Nulla sem est, pellentesque ac suscipit vitae, tempor a diam. Aliquam lacus nisi, sollicitudin tristique lacus id, mattis dapibus nisl.'
@@ -56,7 +56,7 @@ const serverData = [
     },
     {
         id: 5,
-        name: 'Converse',
+        name: 'Puma',
         amount: 7.05,
         bestSeller: bestSellerImg,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam venenatis venenatis purus nec aliquam. Proin non tincidunt tellus. Vestibulum semper sit amet arcu vel mollis. Cras eu placerat massa. Integer fringilla non est ut luctus. Sed facilisis ut lorem ut feugiat. Integer nec bibendum enim, ut dapibus nibh. Nunc sollicitudin nisi dolor, egestas congue urna dignissim vitae. Nulla sem est, pellentesque ac suscipit vitae, tempor a diam. Aliquam lacus nisi, sollicitudin tristique lacus id, mattis dapibus nisl.'
@@ -64,7 +64,7 @@ const serverData = [
     {
         id: 6,
         name: 'New Balance',
-        amount: 7.05,
+        amount: 4.67,
         bestSeller: bestSellerImg,
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam venenatis venenatis purus nec aliquam. Proin non tincidunt tellus. Vestibulum semper sit amet arcu vel mollis. Cras eu placerat massa. Integer fringilla non est ut luctus. Sed facilisis ut lorem ut feugiat. Integer nec bibendum enim, ut dapibus nibh. Nunc sollicitudin nisi dolor, egestas congue urna dignissim vitae. Nulla sem est, pellentesque ac suscipit vitae, tempor a diam. Aliquam lacus nisi, sollicitudin tristique lacus id, mattis dapibus nisl.'
     },
@@ -117,6 +117,7 @@ class Content extends PureComponent {
         super(props);
         this.state = {
             brandsList: [],
+            filteredBrandList: [],
             filter: true
         };
         config.series = [{
@@ -145,6 +146,7 @@ class Content extends PureComponent {
 
     componentDidMount() {
         this.setState({brandsList : serverData});
+        this.setState({filteredBrandList : serverData});
     }
 
     setBrands = (data) => (data.map(element =>
@@ -159,21 +161,32 @@ class Content extends PureComponent {
         const inputValue =  this.inputElem.value.toLowerCase();
         const data = this.state.brandsList;
         let filteredData = data.filter((elem) => {
-            console.log(elem.name.toLowerCase());
-            console.log(elem.name.toLowerCase().indexOf(inputValue));
             return elem.name.toLowerCase().indexOf(inputValue) >= 0
         });
-        console.log(filteredData)
-        this.setState({brandsList : filteredData});
+        this.setState({filteredBrandList : filteredData});
+    }
+
+    handleReset = () => {
+        const data = this.state.brandsList;
+        this.setState({filter: true});
+        this.setState({filteredBrandList : data});
+        this.inputElem.value = '';
+    }
+
+    handleSort = () => {
+        const data = this.state.filteredBrandList;
+        const sorted = [...data.sort((a, b) => a.name > b.name)];
+        this.setState({filteredBrandList : sorted});
     }
 
     render() {
-        const {brandsList, filter} = this.state;
+        const {filteredBrandList, filter} = this.state;
         return (
             <div id="content-block">
                 <div className=" search-block">
                     <input type="text" id="search-field" ref={(node) => {this.inputElem = node}}/>
-                    <label htmlFor="search-field" className="search-button" onClick={this.handleSearch}>Search</label>
+                    <button className="button" onClick={this.handleSearch}>Search</button>
+                    <button className="button" onClick={this.handleReset}>Reset</button>
                 </div>
                 {filter &&
                 <div id="content-info">
@@ -185,8 +198,9 @@ class Content extends PureComponent {
                     </div>
                 </div>
                 }
+                <button className="button sort-button" onClick={this.handleSort}>Sort</button>
                 <div>
-                    {this.setBrands(brandsList)}
+                    {this.setBrands(filteredBrandList)}
                 </div>
             </div>
         );
