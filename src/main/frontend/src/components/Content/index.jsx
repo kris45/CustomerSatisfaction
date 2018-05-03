@@ -1,29 +1,7 @@
 import React, {PureComponent} from 'react';
 import ReactHighcharts from 'react-highcharts';
-import BrandBlock from '../../components/BrandBlock';
+import BrandBlock from '../BrandBlock/index';
 import bestSellerImg from '../../images/img1.jpg';
-
-const mockData = [{
-    name: 'Adidas',
-    y: 61.41,
-    sliced: true,
-    selected: true
-}, {
-    name: 'Nike',
-    y: 11.84
-}, {
-    name: 'Puma',
-    y: 10.85
-}, {
-    name: 'New Balance',
-    y: 4.67
-}, {
-    name: 'Reebok',
-    y: 4.18
-}, {
-    name: 'Converse',
-    y: 7.05
-}];
 
 const serverData = [
     {
@@ -76,9 +54,9 @@ const config = {
         plotBorderWidth: null,
         plotShadow: false,
         type: 'pie',
-        width: 400,
+        width: 300,
         height: 300,
-
+        backgroundColor: 'transparent'
     },
     legend: {
         align: 'right',
@@ -109,7 +87,25 @@ const config = {
     },
     series: [{
         name: 'Brands'
-    }]
+    }],
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                chart: {
+                    height: 300
+                },
+                subtitle: {
+                    text: null
+                },
+                navigator: {
+                    enabled: false
+                }
+            }
+        }]
+    }
 };
 
 class Content extends PureComponent {
@@ -120,33 +116,39 @@ class Content extends PureComponent {
             filteredBrandList: [],
             filter: true
         };
-        config.series = [{
-            name: 'Brands',
-            data: [{
-                name: 'Adidas',
-                y: 61.41
-            }, {
-                name: 'Nike',
-                y: 11.84
-            }, {
-                name: 'Puma',
-                y: 10.85
-            }, {
-                name: 'New Balance',
-                y: 4.67
-            }, {
-                name: 'Reebok',
-                y: 4.18
-            }, {
-                name: 'Converse',
-                y: 7.05
-            }]
-        }];
+
     }
 
     componentDidMount() {
-        this.setState({brandsList : serverData});
-        this.setState({filteredBrandList : serverData});
+        fetch('api/products')
+            .then(response => response.json())
+            .then(data => {
+                let chartConfig = [];
+                data.forEach((elem) => {
+                    let obj = {};
+                    obj.name = elem.name;
+                    obj.y = elem.amount;
+                    chartConfig.push(obj);
+                })
+
+                this.setState({brandsList : data});
+                this.setState({filteredBrandList : data});
+                console.log(chartConfig);
+                config.series[0].data = chartConfig;
+            });
+
+        // let chartConfig = []
+        //
+        // serverData.forEach((elem) => {
+        //     let obj = {};
+        //     obj.name = elem.name;
+        //     obj.y = elem.amount;
+        //     chartConfig.push(obj);
+        // });
+        //
+        // this.setState({brandsList : serverData});
+        // this.setState({filteredBrandList : serverData});
+        // config.series[0].data = chartConfig;
     }
 
     setBrands = (data) => (data.map(element =>
@@ -183,10 +185,13 @@ class Content extends PureComponent {
         const {filteredBrandList, filter} = this.state;
         return (
             <div id="content-block">
-                <div className=" search-block">
+                <div className="search-block">
                     <input type="text" id="search-field" ref={(node) => {this.inputElem = node}}/>
-                    <button className="button" onClick={this.handleSearch}>Search</button>
-                    <button className="button" onClick={this.handleReset}>Reset</button>
+                    <div className="search-block_button">
+                        <button className="button" onClick={this.handleSearch}>Search</button>
+                        <button className="button" onClick={this.handleReset}>Reset</button>
+                    </div>
+
                 </div>
                 {filter &&
                 <div id="content-info">

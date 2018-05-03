@@ -1,11 +1,11 @@
 import React from 'react';
-import SignBlock from '../../containers/SignBlock';
+import SignBlock from '../SignBlock';
 import { Link } from 'react-router-dom';
 
 const Header = () => (
     <header>
-            <h1 className="site-logo">Logo</h1>
-            <h2 className="site-description">Customer Satisfaction</h2>
+        <h1 className="site-logo">Logo</h1>
+        <h2 className="site-description">Customer Satisfaction</h2>
         <nav>
             <ul className="nav-list">
                 <li><Link

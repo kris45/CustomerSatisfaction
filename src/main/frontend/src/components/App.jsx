@@ -7,8 +7,8 @@ import {
 } from 'react-router-dom';
 
 import Header from './Header';
-import Content from '../containers/Content';
-import Sidebar from '../containers/Sidebar';
+import Content from './Content';
+import Sidebar from './Sidebar';
 import Footer from './Footer';
 import AboutUs from './AboutUs';
 import ContactUs from './ContactUs';
