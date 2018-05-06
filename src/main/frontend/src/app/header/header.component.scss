@@ -1,0 +1,47 @@
+header {
+  position: relative;
+  height: 160px;
+
+  .site-logo {
+    position: absolute;
+    top: 10px;
+    font: bold 30px/100% Arial, Helvetica, sans-serif;
+  }
+}
+
+
+
+.site-description {
+  position: absolute;
+  top: 55px;
+  font: italic 100%/130% "Times New Roman", Times, serif;
+}
+
+.nav-list {
+  width: 100%;
+  background: #4f3222;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  border-radius: 8px;
+}
+
+.nav-list li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  float: left;
+  position: relative;
+}
+
+.nav-list a {
+  line-height: 100%;
+  color: #fff;
+  font-weight: bold;
+  display: block;
+  padding: 14px 15px;
+  text-decoration: none;
+}

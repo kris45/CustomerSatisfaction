@@ -1,0 +1,16 @@
+.signBlock {
+  position: absolute;
+  right: 10px;
+  bottom: 11px;
+  z-index: 100;
+  width: 160px;
+}
+
+.signIn, .signOut {
+  background: #8b6f47;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  margin-right: 5px;
+  text-decoration: none;
+}

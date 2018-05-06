@@ -28,7 +28,7 @@ dependencies {
 }
 
 def webappDir = "$projectDir/src/main/frontend"
-def webappBuildDir = "$webappDir/build"
+def webappBuildDir = "$webappDir/dist"
 
 sourceSets {
 	main {
@@ -49,9 +49,9 @@ task buildFrontend(type:Exec) {
 	inputs.dir "$webappDir"
 	group = BasePlugin.BUILD_GROUP
 	if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
-		commandLine "npm.cmd", "run-script", "build"
+		commandLine "ng.cmd", "build"
 	} else {
-		commandLine "npm", "run-script", "build"
+		commandLine "ng", "build"
 	}
 }
 
