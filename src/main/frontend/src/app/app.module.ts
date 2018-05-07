@@ -8,12 +8,14 @@ import { HeaderComponent } from './header/header.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ContentComponent } from './content/content.component';
 import { FooterComponent } from './footer/footer.component';
-import { ContactUsComponent } from './contact-us/contact-us.component';
+import { ContactUsComponent } from './header/contact-us/contact-us.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { ProductsComponent } from './content/products/products.component';
 import {HttpClientModule} from "@angular/common/http";
 import {HttpService} from "./shared/content.service";
 import { ChartComponent } from './content/chart/chart.component';
+import { LabelsComponent } from './header/labels/labels.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { ChartComponent } from './content/chart/chart.component';
     FooterComponent,
     ContactUsComponent,
     ProductsComponent,
-    ChartComponent
+    ChartComponent,
+    LabelsComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

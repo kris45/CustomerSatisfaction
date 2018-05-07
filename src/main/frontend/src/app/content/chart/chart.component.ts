@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Input, Component } from '@angular/core';
 import { Chart } from 'angular-highcharts';
+import { chartData } from "../../shared/models/chartData";
 
 @Component({
   selector: 'app-chart',
@@ -7,6 +8,8 @@ import { Chart } from 'angular-highcharts';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent {
+
+  @Input() chartConfig: chartData[];
 
   chart = new Chart({
     chart: {
@@ -47,32 +50,7 @@ export class ChartComponent {
     },
     series: [{
       name: 'Brands',
-      data: [
-        {
-          name: 'Nike',
-          y: 61.41
-        },
-        {
-          name: 'Adidas',
-          y: 11.84
-        },
-        {
-          name: 'Converse',
-          y: 10.85
-        },
-        {
-          name: 'Reebok',
-          y: 4.18
-        },
-        {
-          name: 'Puma',
-          y: 7.05
-        },
-        {
-          name: 'New Balance',
-          y: 4.67
-        },
-      ]
+      data: this.chartConfig
     }]
   });
 }
